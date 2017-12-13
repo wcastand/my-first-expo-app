@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run: yarn
       - run: yarn test
-      - run: ./node_modules/.bin/exp login -u wcastand@gmail.com -p ",7rd?3Wn6*7C]Epw3$M$" --non-interactive
+      - run: ./node_modules/.bin/exp login -u wcastand -p ",7rd?3Wn6*7C]Epw3$M$" --non-interactive
       - run: ./node_modules/.bin/exp publish .
       - persist_to_workspace:
           root: ~/project
