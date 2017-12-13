@@ -1,19 +1,9 @@
-machine:
-  environment:
-    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
-dependencies:
-  build:
-    - yarn
-  ios:
-    - yarn
-  android:
-    - yarn
-  expo:
-    - yarn
-  cache_directories:
-    - ~/.cache/yarn
-
 version: 2
+environment:
+    PATH: "${PATH}:$(yarn global bin)"
+    NODE_ENV: 'test'
+    RAILS_ENV: 'test'
+    RACK_ENV: 'test'
 jobs:
   build:
     working_directory: ~/project
@@ -24,51 +14,52 @@ jobs:
       - checkout
       - run: yarn
       - run: yarn test
+      - run: exp publish .
       - persist_to_workspace:
           root: ~/project
           paths:
             - node_modules
 
-  android:
-    working_directory: ~/project
-    docker:
-      - image: circleci/android:api-27-node8-alpha
-    steps:
-      - run: yarn global add exp
-      - checkout
-      - run: yarn
-      - run: exp build:android
-
-  ios:
-    macos:
-      xcode: "9.0"
-    steps:
-      - run: yarn global add exp
-      - checkout
-      - run: yarn
-      - run: exp build:ios .
-
-  expo:
-    working_directory: ~/project
-    docker:
-      - image: circleci/node:8
-    steps:
-      - run: yarn global add exp
-      - checkout
-      - run: yarn
-      - run: exp publish .
+#  android:
+#    working_directory: ~/project
+#    docker:
+#      - image: circleci/android:api-27-node8-alpha
+#    steps:
+#      - run: yarn global add exp
+#      - checkout
+#      - run: yarn
+#      - run: exp build:android
+#
+#  ios:
+#    macos:
+#      xcode: "9.0"
+#    steps:
+#      - run: yarn global add exp
+#      - checkout
+#      - run: yarn
+#      - run: exp build:ios .
+#
+#  expo:
+#    working_directory: ~/project
+#    docker:
+#      - image: circleci/node:8
+#    steps:
+#      - run: yarn global add exp
+#      - checkout
+#      - run: yarn
+#      - run: exp publish .
 
 workflows:
   version: 2
   node-android-ios:
     jobs:
       - build
-      - android:
-          requires:
-            - build
-      - ios:
-          requires:
-            - build
-      - expo:
-          requires:
-            - build
+#      - android:
+#          requires:
+#            - build
+#      - ios:
+#          requires:
+#            - build
+#      - expo:
+#          requires:
+#            - build
