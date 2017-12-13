@@ -1,3 +1,18 @@
+machine:
+  environment:
+    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
+dependencies:
+  build:
+    - yarn
+  ios:
+    - yarn
+  android:
+    - yarn
+  expo:
+    - yarn
+  cache_directories:
+    - ~/.cache/yarn
+
 version: 2
 jobs:
   build:
