@@ -1,20 +1,14 @@
 version: 2
-environment:
-    PATH: "${PATH}:$(yarn global bin)"
-    NODE_ENV: 'test'
-    RAILS_ENV: 'test'
-    RACK_ENV: 'test'
 jobs:
   build:
     working_directory: ~/project
     docker:
       - image: circleci/node:8
     steps:
-      - run: yarn global add exp
       - checkout
       - run: yarn
       - run: yarn test
-      - run: exp publish .
+      - run: ./node_modules/.bin/exp publish .
       - persist_to_workspace:
           root: ~/project
           paths:
