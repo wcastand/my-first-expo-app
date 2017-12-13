@@ -27,7 +27,7 @@ jobs:
     steps:
       - run: exp build:ios .
 
-  publish:
+  last:
     macos:
       xcode: "9.0"
     steps:
@@ -44,7 +44,8 @@ workflows:
       - ios:
           requires:
             - build
-     - publish:
+     - last:
           requires:
+            - build
             - android
             - ios
