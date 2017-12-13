@@ -27,6 +27,12 @@ jobs:
     steps:
       - run: exp build:ios .
 
+  publish:
+    macos:
+      xcode: "9.0"
+    steps:
+      - run: exp publish .
+
 workflows:
   version: 2
   node-android-ios:
@@ -38,3 +44,7 @@ workflows:
       - ios:
           requires:
             - build
+     - publish:
+          requires:
+            - android
+            - ios
