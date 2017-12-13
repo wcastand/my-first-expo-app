@@ -45,6 +45,6 @@ workflows:
       - ios:
           requires:
             - build
-     - expo:
+      - expo:
           requires:
             - build
